@@ -35,4 +35,9 @@ def get_documents(type: str = Query(..., regex="^(10-K|10-Q|8-K)$"), year: int =
             "url": f"https://www.sec.gov/Archives/edgar/data/8670/{filings['accessionNumber'][i].replace('-', '')}/{filings['primaryDocument'][i]}"
         })
 
-    return {"status": "ok", "count": len(results), "data": results
+    return {"status": "ok", "count": len(results), "data": results}
+
+# Custom OpenAPI spec route
+@app.get("/custom-openapi.json")
+def get_custom_openapi_spec():
+    return FileResponse(os.path.join(os.path.dirname(__file__), "openapi.json"))
