@@ -38,3 +38,49 @@ def get_documents(type: str = Query(..., regex="^(10-K|10-Q|8-K)$"), year: int =
 @app.get("/custom-openapi.json")
 def get_custom_openapi_spec():
     return FileResponse(os.path.join(os.path.dirname(__file__), "openapi.json"))
+from fastapi.openapi.utils import get_openapi
+
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+    openapi_schema = {
+        "openapi": "3.0.1",
+        "info": {
+            "title": "ADP Financial Data API",
+            "version": "1.0.0"
+        },
+        "servers": [
+            {"url": "https://adp-api-87sj.onrender.com"}
+        ],
+        "paths": {
+            "/documents": {
+                "get": {
+                    "summary": "Fetch ADP filings from SEC EDGAR",
+                    "parameters": [
+                        {
+                            "name": "type",
+                            "in": "query",
+                            "required": true,
+                            "schema": {"type": "string", "enum": ["10-K", "10-Q", "8-K"]}
+                        },
+                        {
+                            "name": "year",
+                            "in": "query",
+                            "required": false,
+                            "schema": {"type": "integer"}
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "List of filings",
+                            "content": {"application/json": {}}
+                        }
+                    }
+                }
+            }
+        }
+    }
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+app.openapi = custom_openapi
