@@ -3,8 +3,12 @@ import requests
 
 app = FastAPI(title="ADP Financial Data API")
 
+@app.get("/")
+def root():
+    return {"message": "API is live"}
+
 SEC_SUBMISSIONS_URL = "https://data.sec.gov/submissions/CIK0000008670.json"
-HEADERS = {"User-Agent": "YourName your@email.com"}  # replace with your info
+HEADERS = {"User-Agent": "alexlynnhoops@gmail.com"}
 
 @app.get("/documents")
 def get_documents(type: str = Query(..., regex="^(10-K|10-Q|8-K)$"), year: int = None):
