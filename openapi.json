@@ -1,0 +1,39 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "ADP Financial Data API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    { "url": "https://adp-api.onrender.com" }
+  ],
+  "paths": {
+    "/documents": {
+      "get": {
+        "summary": "Fetch ADP filings from SEC EDGAR",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "required": true,
+            "schema": { "type": "string", "enum": ["10-K", "10-Q", "8-K"] }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of filings",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}
