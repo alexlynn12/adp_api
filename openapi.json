@@ -5,7 +5,7 @@
     "version": "1.0.0"
   },
   "servers": [
-    { "url": "https://adp-api.onrender.com" }
+    { "url": "https://adp-api-87sj.onrender.com" }
   ],
   "paths": {
     "/documents": {
@@ -16,7 +16,10 @@
             "name": "type",
             "in": "query",
             "required": true,
-            "schema": { "type": "string", "enum": ["10-K", "10-Q", "8-K"] }
+            "schema": {
+              "type": "string",
+              "enum": ["10-K", "10-Q", "8-K"]
+            }
           },
           {
             "name": "year",
