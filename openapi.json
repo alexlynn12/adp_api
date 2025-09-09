@@ -16,10 +16,7 @@
             "name": "type",
             "in": "query",
             "required": true,
-            "schema": {
-              "type": "string",
-              "enum": ["10-K", "10-Q", "8-K"]
-            }
+            "schema": { "type": "string", "enum": ["10-K", "10-Q", "8-K"] }
           },
           {
             "name": "year",

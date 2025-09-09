@@ -5,16 +5,13 @@ import os
 
 app = FastAPI(title="ADP Financial Data API")
 
-# Root route: quick test
 @app.get("/")
 def root():
     return {"message": "API is live"}
 
-# SEC EDGAR filings for ADP
 SEC_SUBMISSIONS_URL = "https://data.sec.gov/submissions/CIK0000008670.json"
 HEADERS = {"User-Agent": "alexlynnhoops@gmail.com"}
 
-# /documents route
 @app.get("/documents")
 def get_documents(type: str = Query(..., regex="^(10-K|10-Q|8-K)$"), year: int = None):
     resp = requests.get(SEC_SUBMISSIONS_URL, headers=HEADERS)
@@ -37,7 +34,7 @@ def get_documents(type: str = Query(..., regex="^(10-K|10-Q|8-K)$"), year: int =
 
     return {"status": "ok", "count": len(results), "data": results}
 
-# Custom OpenAPI spec route
+# Serve your hand-written OpenAPI spec
 @app.get("/custom-openapi.json")
 def get_custom_openapi_spec():
     return FileResponse(os.path.join(os.path.dirname(__file__), "openapi.json"))
