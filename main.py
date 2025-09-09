@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Query
 import requests
+from fastapi.openapi.utils import get_openapi
 
 app = FastAPI(title="ADP Financial Data API")
 
@@ -36,8 +37,6 @@ def get_documents(type: str = Query(..., regex="^(10-K|10-Q|8-K)$"), year: int =
     return {"status": "ok", "count": len(results), "data": results}
 
 # --- Custom OpenAPI override ---
-from fastapi.openapi.utils import get_openapi
-
 def custom_openapi():
     if app.openapi_schema:
         return app.openapi_schema
@@ -51,6 +50,6 @@ def custom_openapi():
         {"url": "https://adp-api-87sj.onrender.com"}
     ]
     app.openapi_schema = openapi_schema
-    return app.openapi_schema
+    return openapi_schema
 
 app.openapi = custom_openapi
